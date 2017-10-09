@@ -55,7 +55,8 @@ while ($line = mysqli_fetch_array($result2, MYSQL_ASSOC)) {
         <title>Math Question Bank</title>
     </head>
     <body>
-        <p>Hello this works</p>
+        <p>Hello this works</p>'
+        <p>Just checking again</p>
     </body>
 </html>
 <?php
