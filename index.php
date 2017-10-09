@@ -36,12 +36,14 @@ while ($row = mysql_fetch_assoc($result)) {
                 }
             };
         </script>
-        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax
+                /latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
         </script>
+          <link rel="stylesheet" href="index.css"/>
     </head>
     <body>
        
-    <center><h2>Problems</h2></center>
+    <h2>Problems</h2>
         <table>
            
             <?php
