@@ -1,64 +1,63 @@
 <?php
-
-$mn = intval(filter_input(INPUT_GET, "mn"));
-
 $dbhost = "localhost";
 $dbuser = "root";
 $dbpassword = "";
-$dbname = "universitydb";
+$dbname = "mathprobdb";
 
-$conn = mysqli_connect($dbhost, $dbuser, $dbpassword, $dbname);
+$con = mysql_connect($dbhost, $dbuser, $dbpassword);
 
-if (!$conn) {
-  die('Could not connect: ' . mysqli_connect_error());
+if (!$con) {
+    die('Could not connect: ' . mysql_error());
 }
 
-$tblArr = array();
-$tblArr[] = "student";
-$tblArr[] = "course";
-$tblArr[] = "section";
-$tblArr[] = "grade_report";
-$tblArr[] = "prerequisite";
+mysql_select_db($dbname, $con);
 
-$table_name = $tblArr[$mn];
+$probIdArr = array();
+$probContArr = array();
 
-$sql = "SHOW COLUMNS FROM $table_name";
-$result1 = mysqli_query($conn, $sql);
+$query = "SELECT pid, content FROM problem ORDER BY pid DESC";
 
-while ($record = mysqli_fetch_array($result1)) {
-    $fields[] = $record['0'];
-}
+$result = mysql_query($query);
 
-$optArr = array();
-$optArr[] = "Student";
-$optArr[] = "Course";
-$optArr[] = "Section";
-$optArr[] = "Grade Report";
-$optArr[] = "Prerequisite";
-
-$data2dArr = array();
-
-$query = "SELECT * FROM  $table_name";
-$result2 = mysqli_query($conn, $query);
-
-while ($line = mysqli_fetch_array($result2, MYSQL_ASSOC)) {
-    $i = 0;
-    foreach ($line as $col_value) {
-        $data2dArr[$i][] = $col_value;
-        $i++;
-    }
+while ($row = mysql_fetch_assoc($result)) {
+    $probIdArr[] = $row['pid'];
+    $probContArr[] = $row['content'];
 }
 ?>
 <html>
     <head>
         <meta charset="UTF-8">
         <title>Math Question Bank</title>
+        <script type="text/javascript">
+            window.MathJax = {
+                tex2jax: {
+                    inlineMath: [["\\(", "\\)"]],
+                    processEscapes: true
+                }
+            };
+        </script>
+        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+        </script>
     </head>
     <body>
-        <p>Hello this works</p>'
-        <p>Just checking again</p>
+       
+    <center><h2>Problems</h2></center>
+        <table>
+           
+            <?php
+            for ($i = 0; $i < count($probIdArr); $i++) {
+                ?>
+                <tr>
+                    <td><?php print "<strong>$probIdArr[$i]</strong>";?>
+                    <?php print "&nbsp"; ?>
+                    <?php print $probContArr[$i]; ?></td>
+                </tr>
+                <?php
+            }
+            ?>
+        </table>
     </body>
 </html>
 <?php
-mysqli_close($conn);
+mysql_close($con);
 ?>
