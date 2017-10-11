@@ -71,8 +71,8 @@ while ($row = mysql_fetch_assoc($result)) {
                         <td>
                             <form class='ChangeOrderForm' action="./ChangeOrder.php" method="get">  
                             <input name="QuestionPid" type="hidden" value="<?php print $problemId[$i] ?>"/>  
-                            <input id="UpDown" name="UpOrDown" type="hidden" value="1" />    
-                            <button onclick="orderingUp()" class="btn btn-info btn-lg">
+                            <input name="UpOrDown" type="hidden" value="1" />    
+                            <button type="submit" class="btn btn-info btn-lg">
                                     <span class="glyphicon glyphicon-arrow-up">
                                     </span>
                                 </button>
@@ -82,8 +82,8 @@ while ($row = mysql_fetch_assoc($result)) {
                         <td> 
                             <form class='ChangeOrderForm' action="./ChangeOrder.php" method="get">  
                             <input name="QuestionPid" type="hidden" value="<?php print $problemId[$i] ?>"/>    
-                            <input id="UpDown" name="UpOrDown" type="hidden" value="0" />
-                             <button type="submit"  class="btn btn-info btn-lg" >
+                            <input name="UpOrDown" type="hidden" value="0" />
+                            <button type="submit"  class="btn btn-info btn-lg" >
                                 
                                     <span class="glyphicon glyphicon-arrow-down">
                                     </span>
