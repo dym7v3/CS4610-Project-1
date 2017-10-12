@@ -16,7 +16,7 @@ $problemId = array();
 $problemContent = array();
 $problemOrder= array();
 
-$query = "SELECT pid, content, ordering FROM problem ORDER BY pid DESC";
+$query = "SELECT `pid`, `content`, ordering FROM problem ORDER BY ordering DESC";
 
 $result = mysql_query($query);
 
@@ -25,6 +25,10 @@ while ($row = mysql_fetch_assoc($result)) {
     $problemContent[] = $row['content'];
     $problemOrder[]=$row['ordering'];
 }
+
+$max=max($problemOrder);
+
+
 ?>
 <html>
     <head>
@@ -62,7 +66,7 @@ while ($row = mysql_fetch_assoc($result)) {
         </thead>
         <tbody>
             <?php
-                 for ($i = 0; $i < count($problemId); $i++) { ?>
+                 for ($i = 0; $i < count($problemOrder); $i++) { ?>
                 <tr>                        
                         
                         <td><?php print "<strong>$problemId[$i]</strong>";?></td>
@@ -70,26 +74,46 @@ while ($row = mysql_fetch_assoc($result)) {
                         <td><?php print $problemOrder[$i]; ?></td>
                         <td>
                             <form class='ChangeOrderForm' action="./ChangeOrder.php" method="get">  
-                            <input name="QuestionPid" type="hidden" value="<?php print $problemId[$i] ?>"/>  
+                            <input name="QuestionPid" type="hidden" value="<?php print $problemOrder[$i] ?>"/>  
                             <input name="UpOrDown" type="hidden" value="1" />    
-                            <button type="submit" class="btn btn-info btn-lg">
-                                    <span class="glyphicon glyphicon-arrow-up">
+                            <?php 
+                                //Checks Removes the move up arrow.
+                                if ( 0 != $i)
+                                {
+                                  print "<button type='submit' class='btn btn-info btn-lg'>
+                                    <span class='glyphicon glyphicon-arrow-up'>
                                     </span>
-                                </button>
+                                    </button>";
+                                } 
+                            ?>            
                             </form>
 
                         </td>
                         <td> 
                             <form class='ChangeOrderForm' action="./ChangeOrder.php" method="get">  
-                            <input name="QuestionPid" type="hidden" value="<?php print $problemId[$i] ?>"/>    
+                            <input name="QuestionPid" type="hidden" value="<?php print $problemOrder[$i] ?>"/>    
                             <input name="UpOrDown" type="hidden" value="0" />
-                            <button type="submit"  class="btn btn-info btn-lg" >
-                                
-                                    <span class="glyphicon glyphicon-arrow-down">
+                             <?php 
+                                //removes the bottom down arrow so then you can move the problem down. 
+                                if ($max != $i+1)
+                                {
+                                  print "<button type='submit' class='btn btn-info btn-lg'>
+                                    <span class='glyphicon glyphicon-arrow-down'>
                                     </span>
+                                    </button>";
+                                } 
+                            ?>           
                             </form>
                         </td>
-                       
+                        <td>
+                            <button type="button" class="btn btn-danger">Edit</button>
+                        </td>
+                        <td>
+                            <form class='DeleteForm' action="./Delete.php" method="post">
+                                <button type="submit" class="btn btn-success">Delete</button>
+                            </form>
+                            
+                        </td>
                     </tr>
             <?php } ?>
         </tbody>
