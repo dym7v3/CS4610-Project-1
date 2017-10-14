@@ -34,73 +34,76 @@ else
     die('Error: Element not found in the GET Method');
 }
 
-//Now if the MovingUpOrDown variable is one then it will move the order down one.
-//If the MovingUpOrDown variable is zero it will move it down one. Of course if it is possible.
+//If the movingUpOrDown variable is 1 means it will move the selected question up.
+//If the movingUpOrDown variable is something else then it will move it down. 
 if($MovingUpOrDown == "1")
 { //This will move the order of the element up. Unless its the highest element
-    $query = "SELECT `ordering` FROM `problem` WHERE `ordering`='$QuestionOrderNum';";
+    $query = "SELECT `ordering` FROM `problem` WHERE `ordering`='$QuestionOrderNum' AND `del`='0';";
     $result = mysql_query($query);
     while ($row = mysql_fetch_assoc($result)) 
     {
        $order=$row['ordering'];
     }
-    
+    //It will change the question order num to 1 one.
     $QuestionOrderNum+=1;
     
-    $sql = "UPDATE `problem` SET `ordering`='-1' WHERE `ordering`='$QuestionOrderNum';";
+    //It will change the order number of the question number above the question
+    //which was selected. It will change the order number to -1.
+    $sql = "UPDATE `problem` SET `ordering`='-1' WHERE `ordering`='$QuestionOrderNum' AND `del`='0';";
     $result= mysql_query($sql);
    
+    //Then getting the order variable from the select query it will increase the
+    //order to plus one. And lower the question order num down one.
+    //It will take the orginal question selected and change the order of it to plus one.
     $order+=1;
     $QuestionOrderNum-=1;
-    $sql = "UPDATE `problem` SET `ordering`='$order' WHERE `ordering`='$QuestionOrderNum';";
+    $sql = "UPDATE `problem` SET `ordering`='$order' WHERE `ordering`='$QuestionOrderNum' AND `del`='0';";
     $result= mysql_query($sql);
     
-   $sql = "UPDATE `problem` SET `ordering`='$QuestionOrderNum' WHERE `ordering`='-1';";
+    
+    //Finally, it will find the question which has the order num as -1 and it will 
+    //change its order to the correct order which would be one less now then it was orginally. 
+    $sql = "UPDATE `problem` SET `ordering`='$QuestionOrderNum' WHERE `ordering`='-1' AND `del`='0';";
     $result= mysql_query($sql);
-      
-
-
+    
 }
 else
 { //This will move the order of the element down. Unless its the lowest element. 
-    $query = "SELECT `ordering` FROM `problem` WHERE `ordering`='$QuestionOrderNum';";
+    $query = "SELECT `ordering` FROM `problem` WHERE `ordering`='$QuestionOrderNum' AND `del`='0';";
     $result = mysql_query($query);
     while ($row = mysql_fetch_assoc($result)) 
     {
        $order=$row['ordering'];
     }
     
+    //Changes the QuestionOrder Num to the previous question.
     $QuestionOrderNum-=1;
     
-    $sql = "UPDATE `problem` SET `ordering`='-1' WHERE `ordering`='$QuestionOrderNum';";
+    
+    //Grabs the previous question and sets it ordering to be negative one. 
+    $sql = "UPDATE `problem` SET `ordering`='-1' WHERE `ordering`='$QuestionOrderNum' AND `del`='0';";
     $result= mysql_query($sql);
    
+    //Then it will take the order of select query and it will put it down by one.
+    //Then it will take the Question order num and add one to it.
     $order-=1;
     $QuestionOrderNum+=1;
-    $sql = "UPDATE `problem` SET `ordering`='$order' WHERE `ordering`='$QuestionOrderNum';";
+    
+    //Run the query which will take the orginal selected question and change the order 
+    //to be one less then it was previously before.
+    $sql = "UPDATE `problem` SET `ordering`='$order' WHERE `ordering`='$QuestionOrderNum' AND `del`='0';";
     $result= mysql_query($sql);
     
-   $sql = "UPDATE `problem` SET `ordering`='$QuestionOrderNum' WHERE `ordering`='-1';";
+    //Then it will finally find the question that has the order number be negative -1
+    //and change its order to be higher by one. In this way it will switch the two elements in
+    //the database.
+    $sql = "UPDATE `problem` SET `ordering`='$QuestionOrderNum' WHERE `ordering`='-1' AND `del`='0';";
     $result= mysql_query($sql);
     
     
 }
+
+//Closes the connection and redirects the page to go back to the index page. 
 mysql_close($connection);
 header('Location: index.php');
 ?>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Math Question Bank</title>
-        
-    <script type="text/javascript">
-            //window.location.href = "http://localhost/Project1/index.php"
-    </script>
-    </head>
-    <body>
-
-                
-        <a href='http://localhost/Project1/index.php'>link to example</a>
-    </body>
-</html>

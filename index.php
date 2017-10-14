@@ -16,7 +16,7 @@ $problemId = array();
 $problemContent = array();
 $problemOrder= array();
 
-$query = "SELECT `pid`, `content`, ordering FROM problem ORDER BY ordering DESC";
+$query = "SELECT `pid`, `content`, ordering FROM problem WHERE `del`='0' ORDER BY ordering DESC";
 
 $result = mysql_query($query);
 
