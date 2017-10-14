@@ -30,10 +30,9 @@ while ($row = mysql_fetch_assoc($result))
     {
        $order=$row['MAX(ordering)'];
     }
-print $order;
+
 //Makes a new order by adding plus one.
 $order+=1;
-
 
 //This adds the content of the question to the question bank and makes it have the correct order number. 
 $sql = "INSERT INTO `problem`(`content`, `ordering`) VALUES ('$insertContent','$order')";

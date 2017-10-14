@@ -25,9 +25,10 @@ while ($row = mysql_fetch_assoc($result)) {
     $problemContent[] = $row['content'];
     $problemOrder[]=$row['ordering'];
 }
-
-$max=max($problemOrder);
-
+if (!empty($problemOrder))
+{
+    $max=max($problemOrder);
+}
 
 ?>
 <html>
@@ -87,7 +88,6 @@ $max=max($problemOrder);
                         <td><?php print "<strong>$problemId[$i]</strong>";?></td>
                         <td><?php print $problemContent[$i]; ?></td>
                         <td><?php print $problemOrder[$i]; ?></td>
-                        <td> <?php print $i; ?></td>
                         <td>
                             <form class='ChangeOrderForm' action="./ChangeOrder.php" method="get">  
                             <input name="QuestionPid" type="hidden" value="<?php print $problemOrder[$i] ?>"/>  
@@ -122,12 +122,13 @@ $max=max($problemOrder);
                             </form>
                         </td>
                         <td>
-                            <form class='EditForm' action="./Edit.php" method="post">
+                            <form class='EditForm' action="./Edit.php" method="get">
                             <button type="button" class="btn btn-danger">Edit</button>
                             </form>
                         </td>
                         <td>
-                            <form class='DeleteForm' action="./Delete.php" method="post">
+                            <form class='DeleteForm' action="./Delete.php" method="get">
+                                <input name="QuestionOrderNum" type="hidden" value="<?php print $problemOrder[$i] ?>"/> 
                                 <button type="submit" class="btn btn-success">Delete</button>
                             </form>
                             

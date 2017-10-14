@@ -16,7 +16,49 @@ if (!$connection) {
 //After the connection to the DB is made then we need to select a table. 
 mysql_select_db($databaseName, $connection);
 
+
+$QuestionOrderNum=null;
+//Checks if the element exists Question Order Num exists and if it does then
+//it will be saved to a variable. 
+if (isset($_GET['QuestionOrderNum']))
+{
+    $QuestionOrderNum = $_GET['QuestionOrderNum'];
+} 
+else 
+{
+    die('Error: Element not found in the GET Method');
+}
+
+//Grabs the highest del value and the highest ordering. 
+$query = "SELECT MAX(del), MAX(ordering) FROM `problem`;";
+$result = mysql_query($query);
+    while ($row = mysql_fetch_assoc($result)) 
+    {
+       $del=$row['MAX(del)'];
+       $maxOrder=$row['MAX(ordering'];
+    }
+
+$del+=1;
+
+//If the first element is being deleted then it will just delete it without changing
+//the order of the other elements. 
+if($maxOrder==$QuestionOrderNum)
+{
+    $sql = "UPDATE `problem` SET `del`='$del', `ordering`='-2' WHERE `ordering`='$QuestionOrderNum' ;";
+    $result= mysql_query($sql);
+}
+else //If it wasn't the first element that was deleted then it will adjust the order of tall the other elements.
+{
+    $sql = "UPDATE `problem` SET `del`='$del', `ordering`='-2' WHERE `ordering`='$QuestionOrderNum' ;";
+    $result= mysql_query($sql);
+    
+    $sql = "UPDATE `problem` SET `ordering`= `ordering`-1 WHERE ordering > $QuestionOrderNum";
+    $result= mysql_query($sql);
+}
+    
+    
+
 //Closes the connection and redirects the page to go back to the index page. 
-//mysql_close($connection);
-//header('Location: index.php');
+mysql_close($connection);
+header('Location: index.php');
 ?>
