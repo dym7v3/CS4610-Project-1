@@ -63,7 +63,25 @@ if($MovingUpOrDown == "1")
 }
 else
 { //This will move the order of the element down. Unless its the lowest element. 
+    $query = "SELECT `ordering` FROM `problem` WHERE `ordering`='$QuestionOrderNum';";
+    $result = mysql_query($query);
+    while ($row = mysql_fetch_assoc($result)) 
+    {
+       $order=$row['ordering'];
+    }
+    
+    $QuestionOrderNum-=1;
+    
+    $sql = "UPDATE `problem` SET `ordering`='-1' WHERE `ordering`='$QuestionOrderNum';";
+    $result= mysql_query($sql);
    
+    $order-=1;
+    $QuestionOrderNum+=1;
+    $sql = "UPDATE `problem` SET `ordering`='$order' WHERE `ordering`='$QuestionOrderNum';";
+    $result= mysql_query($sql);
+    
+   $sql = "UPDATE `problem` SET `ordering`='$QuestionOrderNum' WHERE `ordering`='-1';";
+    $result= mysql_query($sql);
     
     
 }
