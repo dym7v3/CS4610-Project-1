@@ -72,6 +72,7 @@ $max=max($problemOrder);
                         <td><?php print "<strong>$problemId[$i]</strong>";?></td>
                         <td><?php print $problemContent[$i]; ?></td>
                         <td><?php print $problemOrder[$i]; ?></td>
+                        <td> <?php print $i; ?></td>
                         <td>
                             <form class='ChangeOrderForm' action="./ChangeOrder.php" method="get">  
                             <input name="QuestionPid" type="hidden" value="<?php print $problemOrder[$i] ?>"/>  
