@@ -55,8 +55,23 @@ $max=max($problemOrder);
           <link rel="stylesheet" href="index.css"/>
     </head>
 <body>
-    <h2>Math Problem Bank</h2>
-<div class="container">
+
+    <div class="container">
+    <form id="addNewQuestion" action="./AddNewQuestion.php" method="get">
+        <div class="form-group">
+            <h2>Insert A Question</h2>
+            <input id="QuestionContent" class="form-control" type="text" name="QuestionContent" placeholder="Type Question Content"/>
+            <br> 
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="text-right">
+                    <input id="QuestionSubmitButton" class="btn btn-primary" type="submit" value="Submit" onClick="return empty()" />
+                </div>
+            </div>
+        </div>    
+    </form>
+        <h2>Math Problem Bank</h2>
+
     <table class="table table-striped">
         <thead>
             <tr>
@@ -107,7 +122,9 @@ $max=max($problemOrder);
                             </form>
                         </td>
                         <td>
+                            <form class='EditForm' action="./Edit.php" method="post">
                             <button type="button" class="btn btn-danger">Edit</button>
+                            </form>
                         </td>
                         <td>
                             <form class='DeleteForm' action="./Delete.php" method="post">
