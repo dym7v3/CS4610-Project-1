@@ -4,3 +4,34 @@ h2 {
 }
 
 h3 {text-align: center}
+
+
+.btn {
+    padding: 8px 16px;
+    border: 0 none;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.btn-warning {
+    padding: 8px 25px;
+    border: 0 none;
+    position: relative;
+    left: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.btn-info {
+    padding: 10px 16px 11px 16px;
+    border: 0 none;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+.form-control{
+    overflow:auto
+        
+}

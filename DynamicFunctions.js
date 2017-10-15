@@ -1,11 +1,3 @@
-function orderingUp() {
-    document.getElementByName("UpDown").values(155);
-}
-function orderingDown()
-{
-    document.getElementByName("UpDown").value=0;
-}
-
 function empty() {
     var x;
     x = document.getElementById("QuestionContent").value;
@@ -13,4 +5,13 @@ function empty() {
         alert("You tried to submit an empty question. Enter a question then click submit.");
         return false;
     };
+}
+
+function editting(value)
+{
+               
+    document.getElementById('QuestionContent').value=value;
+    heading.innerText = "Edit Your Question";
+    document.getElementById('QuestionContent').style.height="150px";
+    document.getElementById('QuestionContent').style.fontSize="12pt";
 }

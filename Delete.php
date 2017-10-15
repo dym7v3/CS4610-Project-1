@@ -35,9 +35,12 @@ $result = mysql_query($query);
     while ($row = mysql_fetch_assoc($result)) 
     {
        $del=$row['MAX(del)'];
-       $maxOrder=$row['MAX(ordering'];
+       $maxOrder=$row['MAX(ordering)'];
     }
-
+//the variable del at first has the highest elemented that was deleted.
+//then it make the del variable go up by one and then it saves it.
+//this allows for it to have like a list of the elements that were deleted first
+//in addition, when you do the undo delete it will bring the first question deleted first. 
 $del+=1;
 
 //If the first element is being deleted then it will just delete it without changing
@@ -52,10 +55,10 @@ else //If it wasn't the first element that was deleted then it will adjust the o
     $sql = "UPDATE `problem` SET `del`='$del', `ordering`='-2' WHERE `ordering`='$QuestionOrderNum' ;";
     $result= mysql_query($sql);
     
+    //This will have all the elements be shifted down by one because to maintain the order. 
     $sql = "UPDATE `problem` SET `ordering`= `ordering`-1 WHERE ordering > $QuestionOrderNum";
     $result= mysql_query($sql);
 }
-    
     
 
 //Closes the connection and redirects the page to go back to the index page. 
