@@ -30,6 +30,19 @@ if (!empty($problemOrder))
 }
 
 
+//This gets the amount of rows in the page. 
+$numberOfRows= mysql_num_rows($result);
+print $numberOfRows;
+print"<br>";
+
+//Then we want to get the correct amount of pages.
+//So we want 20 questions per page some we divide by 20 and take the ceiling.
+$amountOfpages=$numberOfRows/20;
+$amountOfpages=ceil($amountOfpages);
+print $amountOfpages;
+
+
+
 $query = "SELECT `pid` FROM problem WHERE `del`='1'";
 $result = mysql_query($query);
 
@@ -92,11 +105,23 @@ else
     <table class="table table-striped">
         <thead>
             <tr>
+                <div class="text-right">
+                <ul class="pagination pagination-lg">
+                <li><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                </ul>
+                 </div>
+            </tr>
+            <tr>
                 <th>ID</th>
                 <th>Question</th>
                 <th></th>
                 <th></th>
-                <th></th>
+                <th>
+                </th>
                 <th></th>
                 <th>   
                     <form class="UndoDelete" action='./UndoDelete.php' method="get">
@@ -116,9 +141,9 @@ else
                  for ($i = 0; $i < count($problemOrder); $i++) { ?>
                 <tr>                        
                         
-                        <td><?php print "<strong>$problemId[$i]</strong>";?></td>
+                        <td><?php print "<strong>$problemOrder[$i]</strong>";?></td>
                         <td><?php print $problemContent[$i]; ?></td>
-                        <td><?php print $problemOrder[$i]; ?></td>
+                        <td></td>
                         <td>
                             <form class='ChangeOrderForm' action="./ChangeOrder.php" method="get">  
                             <input name="QuestionPid" type="hidden" value="<?php print $problemOrder[$i]; ?>"/>  
@@ -127,7 +152,7 @@ else
                                 //Checks Removes the move up arrow.
                                 if ( 0 != $i)
                                 {
-                                  print "<button type='submit' class='btn btn-info .btn-md'>
+                                  print "<button type='submit' class='btn btn-info '>
                                     <span class='glyphicon glyphicon-arrow-up'>
                                     </span>
                                     </button>";
@@ -144,7 +169,7 @@ else
                                 //removes the bottom down arrow so then you can move the problem down. 
                                 if ($max != $i+1)
                                 {
-                                  print "<button type='submit' class='btn btn-info .btn-xl'>
+                                  print "<button type='submit' class='btn btn-info'>
                                     <span class='glyphicon glyphicon-arrow-down'>
                                     </span>
                                     </button>";
@@ -152,9 +177,11 @@ else
                             ?>           
                             </form>
                         </td>
+                                    
+                       
                         <td>
-                            <form class='EditForm' action="./AddOrEdittingAQuestion.php" method="get">
-                                <input id="problemContent" name="problemContent" type="hidden" value="<?php print $problemContent[$i]; ?>"/>
+                            <form class='EditForm' action="./AddOrEdittingAQuestion.php" method="get">    
+                                <input id="problemContent" name="problemContent" type="hidden" value='<?php print $problemContent[$i]?>'/>
                                 <input name="QuestionOrderNum" type="hidden" value="<?php print $problemOrder[$i] ?>"/> 
                                 <input id="EditOrAddQuestion" name="EditOrAddQuestion" type="hidden" value="1" />
                                 <button type="button" class="btn btn-success " onclick="editting(problemContent.value, QuestionOrderNum.value)">Edit</button>

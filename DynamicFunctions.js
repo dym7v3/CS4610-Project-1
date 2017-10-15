@@ -9,7 +9,6 @@ function empty() {
 
 function editting(value,questionNum)
 {
-    alert(questionNum);
     document.getElementById('QuestionOrderNum').value=questionNum;
     document.getElementById('QuestionContent').value=value;
     heading.innerText = "Edit Your Question";
