@@ -45,7 +45,8 @@ if($deleted==null)
 }
 else
     $showUndoButton=true;
-           
+
+
 ?>
 <html>
     <head>
@@ -72,19 +73,22 @@ else
     <form id="addNewQuestion" action="./AddNewQuestion.php" method="get">
         <div class="form-group">
             <h2 id="heading">Insert A Question</h2>
+                <input id="EditOrAddQuestion" name="EditOrAddQuestion" type="hidden" value="0" /> 
                 <textarea id="QuestionContent" class="form-control" name="QuestionContent" placeholder="Type Question Content" cols="50" rows="3" name="comment"></textarea>
             <br> 
         <div class="row">
             <div class="col-xs-12">
                 <div class="text-right">
-                    <input id="QuestionSubmitButton" class="btn btn-primary" type="submit" value="Submit" onClick="return empty()" />
-                    
+                    <input id="QuestionSubmitButton" class="btn btn-primary" type="submit"  value="Submit" onClick="return empty()" />
+                    <div class="btn-group">
+                        <input id="QuestionUpdate"  class="btn btn btn-info" type="submit" style="display: none" value="UPDATE" onClick="return empty()" />
+                        <input id="QuestionUpdateCancel"  class="btn btn btn-info" type="reset" onclick='window.location.reload();' style="display: none" value="Cancel" />
+                    </div>
                 </div>
             </div>
         </div>    
     </form>
-        <h2>Math Problem Bank</h2>
-       
+        <h2>Math Problem Bank</h2>      
     <table class="table table-striped">
         <thead>
             <tr>
@@ -149,12 +153,12 @@ else
                             </form>
                         </td>
                         <td>
-                            <form class='EditForm' action="./Edit.php" method="get">
+                            <form class='EditForm' action="./AddNewQuestion.php" method="get">
                                 <input id="problemContent" name="problemContent" type="hidden" value="<?php print $problemContent[$i]; ?>"/>
                                 <input name="QuestionOrderNum" type="hidden" value="<?php print $problemOrder[$i] ?>"/> 
+                                <input id="EditOrAddQuestion" name="EditOrAddQuestion" type="hidden" value="1" />
                                 <button type="button" class="btn btn-success " onclick="editting(problemContent.value)">Edit</button>
-                            
-                            </form>
+                             </form>
                         </td>
                         <td>
                             <form class='DeleteForm' action="./Delete.php" method="get">
