@@ -7,8 +7,10 @@ function empty() {
     };
 }
 
-function editting(value)
+function editting(value,questionNum)
 {
+    alert(questionNum);
+    document.getElementById('QuestionOrderNum').value=questionNum;
     document.getElementById('QuestionContent').value=value;
     heading.innerText = "Edit Your Question";
     document.getElementById('QuestionContent').style.height="150px";

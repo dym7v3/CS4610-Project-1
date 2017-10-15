@@ -46,7 +46,6 @@ if($deleted==null)
 else
     $showUndoButton=true;
 
-
 ?>
 <html>
     <head>
@@ -70,7 +69,7 @@ else
      </head>
 <body>
     <div class="container">    
-    <form id="addNewQuestion" action="./AddNewQuestion.php" method="get">
+    <form id="addNewQuestion" action="./AddOrEdittingAQuestion.php" method="get">
         <div class="form-group">
             <h2 id="heading">Insert A Question</h2>
                 <input id="EditOrAddQuestion" name="EditOrAddQuestion" type="hidden" value="0" /> 
@@ -83,6 +82,7 @@ else
                     <div class="btn-group">
                         <input id="QuestionUpdate"  class="btn btn btn-info" type="submit" style="display: none" value="UPDATE" onClick="return empty()" />
                         <input id="QuestionUpdateCancel"  class="btn btn btn-info" type="reset" onclick='window.location.reload();' style="display: none" value="Cancel" />
+                        <input id="QuestionOrderNum" name="QuestionOrderNum" type="hidden" value="-1"/>
                     </div>
                 </div>
             </div>
@@ -153,11 +153,11 @@ else
                             </form>
                         </td>
                         <td>
-                            <form class='EditForm' action="./AddNewQuestion.php" method="get">
+                            <form class='EditForm' action="./AddOrEdittingAQuestion.php" method="get">
                                 <input id="problemContent" name="problemContent" type="hidden" value="<?php print $problemContent[$i]; ?>"/>
                                 <input name="QuestionOrderNum" type="hidden" value="<?php print $problemOrder[$i] ?>"/> 
                                 <input id="EditOrAddQuestion" name="EditOrAddQuestion" type="hidden" value="1" />
-                                <button type="button" class="btn btn-success " onclick="editting(problemContent.value)">Edit</button>
+                                <button type="button" class="btn btn-success " onclick="editting(problemContent.value, QuestionOrderNum.value)">Edit</button>
                              </form>
                         </td>
                         <td>
