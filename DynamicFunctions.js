@@ -20,3 +20,4 @@ function editting(value,questionNum)
     document.getElementById('EditOrAddQuestion').value="1";
     
 }
+
