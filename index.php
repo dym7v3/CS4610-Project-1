@@ -16,7 +16,22 @@ $problemId = array();
 $problemContent = array();
 $problemOrder= array();
 
-$query = "SELECT `pid`, `content`, ordering FROM problem WHERE `del`='0' ORDER BY ordering DESC";
+$paging="1";
+
+if(isset($_GET['pageNum']))
+    $paging=$_GET['pageNum'];
+
+if($paging=="" || $paging=="1")
+{
+    $pageNumber="0";
+}
+else
+{
+    $pageNumber=($paging*20)-20;
+}
+
+
+$query = "SELECT `pid`, `content`, ordering FROM problem WHERE `del`='0' ORDER BY ordering DESC LIMIT $pageNumber,20";
 $result = mysql_query($query);
 
 while ($row = mysql_fetch_assoc($result)) {
@@ -28,19 +43,19 @@ if (!empty($problemOrder))
 {
     $max=max($problemOrder);
 }
+$sql = "SELECT `pid`, `content`, `ordering` FROM problem WHERE `del`='0' ORDER BY ordering DESC ";
+$results = mysql_query($sql);
+
+
 
 
 //This gets the amount of rows in the page. 
-$numberOfRows= mysql_num_rows($result);
-print $numberOfRows;
-print"<br>";
+$numberOfRows= mysql_num_rows($results);
 
 //Then we want to get the correct amount of pages.
 //So we want 20 questions per page some we divide by 20 and take the ceiling.
 $amountOfpages=$numberOfRows/20;
 $amountOfpages=ceil($amountOfpages);
-print $amountOfpages;
-
 
 
 $query = "SELECT `pid` FROM problem WHERE `del`='1'";
@@ -105,10 +120,10 @@ else
     <table class="table table-striped">
         <thead>
             <tr>
-                <div class="text-right">
+                <div class="text-center">
                 <?php for ($j = 1; $j <= $amountOfpages; $j++) { ?>
                     <ul class="pagination pagination-lg">
-                        <li><a href="#"><?php echo $j ?></a></li>
+                        <li><a href="index.php?pageNum=<?php echo $j; ?>" ><?php echo $j; ?></a></li>
                     
                     </ul>
                 <?php } ?>
@@ -148,7 +163,7 @@ else
                             <input name="UpOrDown" type="hidden" value="1" />    
                             <?php 
                                 //Checks Removes the move up arrow.
-                                if ( 0 != $i)
+                                if ( $numberOfRows != $problemOrder[$i])
                                 {
                                   print "<button type='submit' class='btn btn-info '>
                                     <span class='glyphicon glyphicon-arrow-up'>
@@ -192,8 +207,10 @@ else
                             </form>
                             
                         </td>
+                        
                     </tr>
             <?php } ?>
+                 
         </tbody>
     </table>
 </div>
