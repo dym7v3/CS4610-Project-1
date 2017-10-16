@@ -106,13 +106,12 @@ else
         <thead>
             <tr>
                 <div class="text-right">
-                <ul class="pagination pagination-lg">
-                <li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                </ul>
+                <?php for ($j = 1; $j <= $amountOfpages; $j++) { ?>
+                    <ul class="pagination pagination-lg">
+                        <li><a href="#"><?php echo $j ?></a></li>
+                    
+                    </ul>
+                <?php } ?>
                  </div>
             </tr>
             <tr>
@@ -120,8 +119,7 @@ else
                 <th>Question</th>
                 <th></th>
                 <th></th>
-                <th>
-                </th>
+                <th></th>
                 <th></th>
                 <th>   
                     <form class="UndoDelete" action='./UndoDelete.php' method="get">
